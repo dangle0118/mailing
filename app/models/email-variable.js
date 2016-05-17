@@ -5,7 +5,6 @@
  */
 import mongoose from 'mongoose';
 import timestamps from 'mongoose-timestamp';
-	// validator = require('../modules/validator'),
 var Schema = mongoose.Schema;
 
 /**

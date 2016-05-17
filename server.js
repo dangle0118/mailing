@@ -3,6 +3,8 @@ import chalk from 'chalk';
 import { config } from './config/config';
 import ExpressApp from './config/express';
 
+import * as temp from './app/modules/email';
+
 var db = mongoose.connect(config.db.uri, config.db.options, (err) => {
 	if (err) {
 		console.error(chalk.red('Could not connect to MongoDB!'));

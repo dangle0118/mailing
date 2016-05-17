@@ -3,11 +3,11 @@
 /**
  * Module dependencies.
  */
- import mongoose from 'mongoose';
- import timestamps from 'mongoose-timestamp';
-	// validator = require('../modules/validator'),
+import mongoose from 'mongoose';
+import timestamps from 'mongoose-timestamp';
+import validator from '../modules/validator';
 
- var Schema = mongoose.Schema;
+var Schema = mongoose.Schema;
 
 /**
  * Emailtemplate Schema
@@ -41,7 +41,7 @@ var EmailtemplateSchema = new Schema({
 });
 
 EmailtemplateSchema.virtual('_valid').get(() => {
-	return validator(this, ['name', 'site', 'category', 'variableGroups', 'html', 'subject']);
+	return validator(this, 'name', 'site', 'category', 'variableGroups', 'html', 'subject');
 });
 
 EmailtemplateSchema.plugin(timestamps);
