@@ -8,7 +8,7 @@ module.exports = function(grunt) {
 	var watchFiles = {
 		serverJS: ['server.js', 'config/**/*.js', 'app/**/*.js'],
 		buildJS: ['target/**/*.js'],
-		mochaTests: ['app/tests/**/*.js']
+		// mochaTests: ['app/tests/**/*.js']
 	};
 
 	// Project Configuration
@@ -45,6 +45,24 @@ module.exports = function(grunt) {
 				}]
 			}
 		},
+		env: {
+			dev: {
+				MONGO_HOST: 'localhost',
+				MONGO_DB: 'mailing-leflair'
+			},
+			test: {
+				MONGO_HOST: 'localhost',
+				MONGO_DB: 'mailing-leflair-test',
+				SERVER_PATH: path.resolve('./target/src/server.js')
+ 			}
+ 		},
+		'mochaTest': {
+			'api': {
+				reporter: 'spec',
+				clearRequireCache: false,
+				src: ['target/src/app/tests/**/*.js']
+			}
+		},
 
 		nodemon: {
 			dev: {
@@ -54,11 +72,7 @@ module.exports = function(grunt) {
 					ext: 'js,html',
 					watch: watchFiles.buildJS,
 					ignore: ['node_modules/**'],
-					cwd: path.resolve('./target/src'),
-					env: {
-						MONGO_HOST: 'localhost',
-						PORT: '3000'
-					}
+					cwd: path.resolve('./target/src')					
 				}
 			}
 		},
@@ -93,8 +107,10 @@ module.exports = function(grunt) {
 	// Making grunt default to force in order not to break the project.
 	grunt.option('force', true);
 
-	grunt.registerTask('default', ['clean', 'build', 'concurrent:default']);
-
 	grunt.registerTask('build', ['eslint', 'clean', 'babel']);
+
+	grunt.registerTask('default', ['clean', 'build', 'env:dev', 'concurrent:default']);
+
+	grunt.registerTask('test', ['clean', 'build', 'env:test', 'mochaTest'])
 
 };

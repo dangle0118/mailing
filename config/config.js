@@ -1,12 +1,15 @@
 import * as _ from 'lodash';
 
+const MONGO_HOST = process.env.MONGO_HOST || 'localhost';
+const MONGO_DB = process.env.MONGO_DB || 'mailing-leflair';
+
 export let config = {
 	app: {
 		title: 'Leflair Vietnam - Mailing Service'
 	},
 	port: process.env.PORT || 3000,
 	db: {
-		uri: 'mongodb://' + (process.env.MONGO_HOST || 'localhost') + '/mailing-leflair',
+		uri: `mongodb://${MONGO_HOST}/${MONGO_DB}`,
 		options: {
 			user: process.env.MONGO_USER,
 			pass: process.env.MONGO_PASSWORD
